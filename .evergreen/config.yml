@@ -478,15 +478,14 @@ functions:
     - command: ec2.assume_role
       params:
         role_arn: "${aws_test_secrets_role}"
-    - command: shell.exec
+    - command: subprocess.exec
       type: test
       params:
-        shell: "bash"
+        binary: "bash"
         working_dir: src/go.mongodb.org/mongo-driver
         include_expansions_in_env: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_SESSION_TOKEN"]
-        script: |
-          ${PREPARE_SHELL}
-          bash etc/run-atlas-test.sh
+        args: 
+          - etc/run-atlas-test.sh
 
   run-ocsp-test:
     - command: shell.exec
